@@ -11,19 +11,19 @@ first you will need
 
 create an virtual environment
 
-´´´
+```
 virtualenv venv
-´´´
+```
 
 install dependencies with
 
-´´´
+```
 pip install -r requirements.txt
 pip install -e .
-´´´
+```
 
 finally, execute pytest
 
-´´´
+```
 pytest
-´´´
+```
