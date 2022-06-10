@@ -24,6 +24,12 @@ pip install -e .
 
 finally, execute pytest
 
+# Build artifact
+
+```
+bash docker_build.sh
+```
+
 ```
 pytest
 ```
