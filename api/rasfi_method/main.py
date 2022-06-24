@@ -77,5 +77,4 @@ if __name__ == "__main__":
     results = apply_method(
         inputs
     )
-    print(results.ranking)
-    print(results.decision_matrix)
+    print(results.__dict__.keys())
