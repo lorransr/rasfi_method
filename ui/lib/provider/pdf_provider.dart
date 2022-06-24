@@ -103,9 +103,9 @@ class PDFProvider {
       ..href = url
       ..style.display = 'none'
       ..download = 'taxonomy_method_results.pdf';
-    html.document.body.children.add(anchor);
+    html.document.body?.children.add(anchor);
     anchor.click();
-    html.document.body.children.remove(anchor);
+    html.document.body?.children.remove(anchor);
     html.Url.revokeObjectUrl(url);
   }
 }

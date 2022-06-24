@@ -19,3 +19,6 @@ docker run -d -p 1200:80 --name myanimate myanimate-web
 ```
 
 Here we go, open browser and go to http://localhost:1200/
+
+## To run flutter server
+flutter run -d web-server --web-hostname=0.0.0.0 --web-port=8081   

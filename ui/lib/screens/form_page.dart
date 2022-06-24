@@ -20,7 +20,7 @@ class _FormPageState extends State<FormPage> {
   ];
   var _dropDownValue;
   var _criteriaWeight;
-  int _lastRemovedPos;
+  late int _lastRemovedPos;
 
   void _snackValidationError(String message) {
     final snack = SnackBar(
@@ -184,7 +184,7 @@ class _FormPageState extends State<FormPage> {
                 title: DropdownButton(
                   value: getCriteriaTypeName(_criteriaList[index].type),
                   onChanged: (val) {
-                    _criteriaList[index].type = getCriteriaType(val);
+                    _criteriaList[index].type = getCriteriaType(val as String);
                     print(val);
                     setState(() => _dropDownValue = val);
                   },

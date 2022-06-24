@@ -19,15 +19,15 @@ class ResultPage extends StatefulWidget {
 }
 
 class _ResultPageState extends State<ResultPage> {
-  ScrollController _controller;
+  late ScrollController _controller;
   var _pdfProvider = PDFProvider();
   var _tableHelper = TableHelper();
   @override
   Widget build(BuildContext context) {
     _controller = ScrollController();
-    TaxonomyInput _input = ModalRoute.of(context).settings.arguments;
+    TaxonomyInput? _input = ModalRoute.of(context)?.settings.arguments as TaxonomyInput?;
     if (_input != null) {
-      print("received inputs: ${_input}");
+      print("received inputs: $_input");
     } else {
       print("empty arguments; generating inputs...");
       _input = ExampleHelper().carExample();
@@ -53,13 +53,13 @@ class _ResultPageState extends State<ResultPage> {
                   stream: resultsBloc.subject.stream,
                   builder: (context, AsyncSnapshot<ModelResults> snapshot) {
                     if (snapshot.hasData) {
-                      if (snapshot.data.error != null &&
-                          snapshot.data.error.length > 0) {
-                        return _buildErrorWidget(snapshot.data.error);
+                      if (snapshot.data?.error != null &&
+                          snapshot.data!.error.length > 0) {
+                        return _buildErrorWidget(snapshot.data!.error);
                       }
-                      return _buildSuccessWidget(snapshot.data);
+                      return _buildSuccessWidget(snapshot.data!);
                     } else if (snapshot.hasError) {
-                      return _buildErrorWidget(snapshot.error);
+                      return _buildErrorWidget(snapshot.error.toString());
                     } else {
                       return _buildLoadingWidget();
                     }
@@ -163,7 +163,7 @@ class _ResultPageState extends State<ResultPage> {
     return DataTable(columns: _cols, rows: _rows);
   }
 
-  Widget _matrixTile(Map<String, dynamic> matrix, {List<String> alternatives}) {
+  Widget _matrixTile(Map<String, dynamic> matrix, {List<String>? alternatives}) {
     print("Matrix: ${matrix.entries}");
     List<DataColumn> _cols = [];
     _cols.add(DataColumn(label: Text("Alternative")));
@@ -176,7 +176,7 @@ class _ResultPageState extends State<ResultPage> {
     );
     List<DataRow> _rows = [];
     int idx = 0;
-    alternatives.forEach((a) {
+    alternatives?.forEach((a) {
       List<DataCell> _cells = [];
       var _alternativeCell = DataCell(Text(a));
       _cells.add(_alternativeCell);

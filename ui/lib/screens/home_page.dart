@@ -36,7 +36,7 @@ class _HomePageState extends State<HomePage> {
                           enableSuggestions: false,
                           controller: _textEditingController,
                           validator: (value) {
-                            if (value.isEmpty) {
+                            if (value!.isEmpty) {
                               return "Please Enter a Password";
                             }
                             if (value != _acceptedKey) {
@@ -62,7 +62,7 @@ class _HomePageState extends State<HomePage> {
   }
 
   void _validatePassword() {
-    if (_formKey.currentState.validate()) {
+    if (_formKey.currentState!.validate()) {
       // Do something like updating SharedPreferences or User Settings etc.
       Navigator.of(context).pop();
       Navigator.pushNamed(context, FormPage.routeName);

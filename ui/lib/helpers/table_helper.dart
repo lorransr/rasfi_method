@@ -106,7 +106,7 @@ class TableHelper {
       _keys.forEach((k) {
         print("k: $k");
         print("idx: $idx");
-        var value = parsedMatrix[k][idx];
+        var value = parsedMatrix[k]![idx];
         print("value: $value");
         if (k != "0_alternatives") {
           var valueTransformed = value.toStringAsFixed(3);

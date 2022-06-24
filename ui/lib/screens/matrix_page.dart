@@ -8,7 +8,7 @@ import 'package:taxonomy_method/screens/result_page.dart';
 
 class MatrixPage extends StatefulWidget {
   static const routeName = '/matrix';
-  MatrixPage({Key key}) : super(key: key);
+  MatrixPage({Key? key}) : super(key: key);
 
   @override
   _MatrixPageState createState() => _MatrixPageState();
@@ -51,7 +51,7 @@ class _MatrixPageState extends State<MatrixPage> {
             print(val);
           },
           validator: (val) {
-            if (val.isEmpty) {
+            if (val!.isEmpty) {
               return "Insert data";
             }
           },
@@ -71,7 +71,7 @@ class _MatrixPageState extends State<MatrixPage> {
             print(val);
           },
           validator: (val) {
-            if (val.isEmpty) {
+            if (val!.isEmpty) {
               return "Name the alternative";
             }
           },
@@ -101,8 +101,8 @@ class _MatrixPageState extends State<MatrixPage> {
       var idx = 0;
       row.cells.forEach((cell) {
         if (idx > 0) {
-          TextFormField form = cell.child;
-          alternative.add(double.parse(form.controller.text));
+          TextFormField form = cell.child as TextFormField;
+          alternative.add(double.parse(form.controller!.text));
           idx += 1;
         } else {
           idx += 1;
@@ -117,8 +117,8 @@ class _MatrixPageState extends State<MatrixPage> {
     List<String> alternativesNames = [];
     _rows.forEach((row) {
       DataCell cell = row.cells.first;
-      TextFormField form = cell.child;
-      alternativesNames.add(form.controller.text);
+      TextFormField form = cell.child as TextFormField;
+      alternativesNames.add(form.controller!.text);
     });
     return alternativesNames;
   }
@@ -194,7 +194,7 @@ class _MatrixPageState extends State<MatrixPage> {
   Widget build(BuildContext context) {
     // _criterias = _generateCriterias(20);
     // _cols = _createCols(_criterias);
-    List<Criteria> _criterias = ModalRoute.of(context).settings.arguments;
+    List<Criteria> _criterias = ModalRoute.of(context)?.settings.arguments as List<Criteria>;
     print("n criterias: ${_criterias.length}");
     _cols = _createCols(_criterias);
     return Scaffold(
