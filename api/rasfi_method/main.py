@@ -1,5 +1,6 @@
 import pandas as pd
 from typing import List, Dict
+import json
 
 from rasfi_method.model import RasfiInputs, RasfiResults
 from rasfi_method.rasfi import (
@@ -77,4 +78,4 @@ if __name__ == "__main__":
     results = apply_method(
         inputs
     )
-    print(results.__dict__.keys())
+    print(json.dumps(results.__dict__))
