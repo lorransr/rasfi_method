@@ -4,12 +4,10 @@ import 'package:taxonomy_method/helpers/example_helper.dart';
 import 'package:taxonomy_method/helpers/table_helper.dart';
 import 'package:taxonomy_method/model/shortest_distance.dart';
 import 'package:taxonomy_method/provider/pdf_provider.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:taxonomy_method/bloc/results_bloc.dart';
 import 'package:taxonomy_method/model/taxonomy_input.dart';
 import 'package:taxonomy_method/model/model_results.dart';
-import 'package:flutter/rendering.dart';
 import 'package:taxonomy_method/screens/home_page.dart';
 
 class ResultPage extends StatefulWidget {
@@ -25,12 +23,13 @@ class _ResultPageState extends State<ResultPage> {
   @override
   Widget build(BuildContext context) {
     _controller = ScrollController();
-    TaxonomyInput? _input = ModalRoute.of(context)?.settings.arguments as TaxonomyInput?;
+    RasfiInput? _input =
+        ModalRoute.of(context)?.settings.arguments as RasfiInput?;
     if (_input != null) {
       print("received inputs: $_input");
     } else {
       print("empty arguments; generating inputs...");
-      _input = ExampleHelper().carExample();
+      _input = ExampleHelper().rasfiExample();
     }
     print("input: ${jsonEncode(_input)}");
     resultsBloc.getRanking(_input);
@@ -99,27 +98,28 @@ class _ResultPageState extends State<ResultPage> {
   Widget _developmentAttributesTile(ModelResults data) {
     print("data: ${data.results.toJson()}");
 
-    return ListTile(
-      title: Text(
-        "✨ Development Attributes ✨",
-        style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
-      ),
-      subtitle: Padding(
-        padding: const EdgeInsets.all(32.0),
-        child: Container(
-          child: DataTable(
-            sortAscending: true,
-            sortColumnIndex: 0,
-            columns: [
-              DataColumn(label: Text("Ranking")),
-              DataColumn(label: Text("Alternative")),
-              DataColumn(label: Text("Value"))
-            ],
-            rows: _getRowsFromResults(data.results.developmentAttributes),
-          ),
-        ),
-      ),
-    );
+    return Text("data: ${data.results.toJson()}");
+    // ListTile(
+    //   title: Text(
+    //     "✨ Development Attributes ✨",
+    //     style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+    //   ),
+    //   subtitle: Padding(
+    //     padding: const EdgeInsets.all(32.0),
+    //     child: Container(
+    //       child: DataTable(
+    //         sortAscending: true,
+    //         sortColumnIndex: 0,
+    //         columns: [
+    //           DataColumn(label: Text("Ranking")),
+    //           DataColumn(label: Text("Alternative")),
+    //           DataColumn(label: Text("Value"))
+    //         ],
+    //         rows: _getRowsFromResults(data.results.developmentAttributes),
+    //       ),
+    //     ),
+    //   ),
+    // );
   }
 
   Widget _simpleMatrixTile(Map<String, dynamic> simpleMatrix) {
@@ -163,7 +163,8 @@ class _ResultPageState extends State<ResultPage> {
     return DataTable(columns: _cols, rows: _rows);
   }
 
-  Widget _matrixTile(Map<String, dynamic> matrix, {List<String>? alternatives}) {
+  Widget _matrixTile(Map<String, dynamic> matrix,
+      {List<String>? alternatives}) {
     print("Matrix: ${matrix.entries}");
     List<DataColumn> _cols = [];
     _cols.add(DataColumn(label: Text("Alternative")));
@@ -294,37 +295,37 @@ class _ResultPageState extends State<ResultPage> {
   }
 
   Future<void> _showAlertDialog() async {
-  return showDialog<void>(
-    context: context,
-    builder: (BuildContext context) {
-      return AlertDialog(
-        title: const Text('Warning'),
-        content: SingleChildScrollView(
-          child: ListBody(
-            children: const <Widget>[
-              Text('All current analysis would be lost'),
-              Text("Do you want to proceed?"),
-            ],
+    return showDialog<void>(
+      context: context,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title: const Text('Warning'),
+          content: SingleChildScrollView(
+            child: ListBody(
+              children: const <Widget>[
+                Text('All current analysis would be lost'),
+                Text("Do you want to proceed?"),
+              ],
+            ),
           ),
-        ),
-        actions: <Widget>[
-          TextButton(
-            child: const Text('Ok'),
-            onPressed: () {
-              Navigator.pushNamed(context, HomePage.routeName);
-            },
-          ),
-          TextButton(
-            child: const Text('Cancel'),
-            onPressed: () {
-              Navigator.of(context).pop();
-            },
-          ),
-        ],
-      );
-    },
-  );
-}
+          actions: <Widget>[
+            TextButton(
+              child: const Text('Ok'),
+              onPressed: () {
+                Navigator.pushNamed(context, HomePage.routeName);
+              },
+            ),
+            TextButton(
+              child: const Text('Cancel'),
+              onPressed: () {
+                Navigator.of(context).pop();
+              },
+            ),
+          ],
+        );
+      },
+    );
+  }
 
   Widget _buildSuccessWidget(ModelResults data) {
     List<String> _alternatives = _tableHelper.getAlternatives(data);
@@ -334,111 +335,113 @@ class _ResultPageState extends State<ResultPage> {
         children: [
           _developmentAttributesTile(data),
           Divider(),
-          Text(
-            "Method Outputs",
-            style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
-          ),
-          SizedBox(
-            height: 32,
-          ),
-          ListTile(
-            title: Text(
-              "Raw Matrix",
-              style: TextStyle(fontWeight: FontWeight.bold),
-            ),
-            subtitle: Padding(
-              padding: const EdgeInsets.all(32.0),
-              child: Container(
-                child: _matrixTile(data.results.rawMatrix,
-                    alternatives: _alternatives),
-              ),
-            ),
-          ),
-          ListTile(
-            title: Text(
-              "Normalized Matrix",
-              style: TextStyle(fontWeight: FontWeight.bold),
-            ),
-            subtitle: Padding(
-              padding: const EdgeInsets.all(32.0),
-              child: Container(
-                  child: _matrixTile(data.results.normalizedMatrix,
-                      alternatives: _alternatives)),
-            ),
-          ),
-          ListTile(
-            title: Text(
-              "Shortest Distance",
-              style: TextStyle(fontWeight: FontWeight.bold),
-            ),
-            subtitle: Padding(
-              padding: const EdgeInsets.all(32.0),
-              child: Container(
-                  child: _distanceTile(data.results.shortestDistance.values,
-                      _alternatives, 'Shortest Distance')),
-            ),
-          ),
-          ListTile(
-            title: Text(
-              "Shortest Distance",
-              style: TextStyle(fontWeight: FontWeight.bold),
-            ),
-            subtitle: Padding(
-              padding: const EdgeInsets.all(32.0),
-              child: Container(
-                child: _avgDistanceTile(data.results.shortestDistance),
-              ),
-            ),
-          ),
-          ListTile(
-            title: Text(
-              "Accepted Range",
-              style: TextStyle(fontWeight: FontWeight.bold),
-            ),
-            subtitle: Padding(
-              padding: const EdgeInsets.all(32.0),
-              child: Container(
-                child: _acceptedRangeTile(data.results.acceptedRange),
-              ),
-            ),
-          ),
-          ListTile(
-            title: Text(
-              "Normalized Matrix Filtered",
-              style: TextStyle(fontWeight: FontWeight.bold),
-            ),
-            subtitle: Padding(
-              padding: const EdgeInsets.all(32.0),
-              child: Container(
-                  child: _matrixTile(data.results.normalizedMatrixFiltered,
-                      alternatives: _alternatives)),
-            ),
-          ),
-          ListTile(
-            title: Text(
-              "Ideal Values",
-              style: TextStyle(fontWeight: FontWeight.bold),
-            ),
-            subtitle: Padding(
-              padding: const EdgeInsets.all(32.0),
-              child: Container(
-                child: _seriesTile(data.results.idealValues, "Criterias"),
-              ),
-            ),
-          ),
-          ListTile(
-            title: Text(
-              "Development Pattern",
-              style: TextStyle(fontWeight: FontWeight.bold),
-            ),
-            subtitle: Padding(
-              padding: const EdgeInsets.all(32.0),
-              child: Container(
-                child: _seriesTile(
-                    data.results.developmentPattern, "Alternatives"),
-              ),
-            ),
-          ),
+
+          // Text(
+          //   "Method Outputs",
+          //   style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+          // ),
+          // SizedBox(
+          //   height: 32,
+          // ),
+          // ListTile(
+          //   title: Text(
+          //     "Raw Matrix",
+          //     style: TextStyle(fontWeight: FontWeight.bold),
+          //   ),
+          //   subtitle: Padding(
+          //     padding: const EdgeInsets.all(32.0),
+          //     child: Container(
+          //       child: _matrixTile(data.results.rawMatrix,
+          //           alternatives: _alternatives),
+          //     ),
+          //   ),
+          // ),
+          // ListTile(
+          //   title: Text(
+          //     "Normalized Matrix",
+          //     style: TextStyle(fontWeight: FontWeight.bold),
+          //   ),
+          //   subtitle: Padding(
+          //     padding: const EdgeInsets.all(32.0),
+          //     child: Container(
+          //         child: _matrixTile(data.results.normalizedMatrix,
+          //             alternatives: _alternatives)),
+          //   ),
+          // ),
+          // ListTile(
+          //   title: Text(
+          //     "Shortest Distance",
+          //     style: TextStyle(fontWeight: FontWeight.bold),
+          //   ),
+          //   subtitle: Padding(
+          //     padding: const EdgeInsets.all(32.0),
+          //     child: Container(
+          //         child: _distanceTile(data.results.shortestDistance.values,
+          //             _alternatives, 'Shortest Distance')),
+          //   ),
+          // ),
+          // ListTile(
+          //   title: Text(
+          //     "Shortest Distance",
+          //     style: TextStyle(fontWeight: FontWeight.bold),
+          //   ),
+          //   subtitle: Padding(
+          //     padding: const EdgeInsets.all(32.0),
+          //     child: Container(
+          //       child: _avgDistanceTile(data.results.shortestDistance),
+          //     ),
+          //   ),
+          // ),
+          // ListTile(
+          //   title: Text(
+          //     "Accepted Range",
+          //     style: TextStyle(fontWeight: FontWeight.bold),
+          //   ),
+          //   subtitle: Padding(
+          //     padding: const EdgeInsets.all(32.0),
+          //     child: Container(
+          //       child: _acceptedRangeTile(data.results.acceptedRange),
+          //     ),
+          //   ),
+          // ),
+          // ListTile(
+          //   title: Text(
+          //     "Normalized Matrix Filtered",
+          //     style: TextStyle(fontWeight: FontWeight.bold),
+          //   ),
+          //   subtitle: Padding(
+          //     padding: const EdgeInsets.all(32.0),
+          //     child: Container(
+          //         child: _matrixTile(data.results.normalizedMatrixFiltered,
+          //             alternatives: _alternatives)),
+          //   ),
+          // ),
+          // ListTile(
+          //   title: Text(
+          //     "Ideal Values",
+          //     style: TextStyle(fontWeight: FontWeight.bold),
+          //   ),
+          //   subtitle: Padding(
+          //     padding: const EdgeInsets.all(32.0),
+          //     child: Container(
+          //       child: _seriesTile(data.results.idealValues, "Criterias"),
+          //     ),
+          //   ),
+          // ),
+          // ListTile(
+          //   title: Text(
+          //     "Development Pattern",
+          //     style: TextStyle(fontWeight: FontWeight.bold),
+          //   ),
+          //   subtitle: Padding(
+          //     padding: const EdgeInsets.all(32.0),
+          //     child: Container(
+          //       child: _seriesTile(
+          //           data.results.developmentPattern, "Alternatives"),
+          //     ),
+          //   ),
+          // ),
+
           Row(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [

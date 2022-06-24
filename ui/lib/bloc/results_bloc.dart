@@ -8,7 +8,7 @@ class ResultsBloc {
   final BehaviorSubject<ModelResults> _subject =
       BehaviorSubject<ModelResults>();
 
-  getRanking(TaxonomyInput input) async {
+  getRanking(RasfiInput input) async {
     ModelResults response = await _repository.getRanking(input);
     _subject.sink.add(response);
   }

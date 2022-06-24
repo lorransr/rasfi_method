@@ -1,9 +1,10 @@
 import 'package:taxonomy_method/model/model_results.dart';
 
 class TableHelper {
-  static const default_value_series = ["key","value"];
+  static const default_value_series = ["key", "value"];
   List<String> getAlternatives(ModelResults data) {
-    return data.results.developmentAttributes.keys.toList();
+    return [""];
+    // data.results.developmentAttributes.keys.toList();
   }
 
   List<List<dynamic>> getVectorArray(Map<String, dynamic> vector) {
@@ -59,8 +60,9 @@ class TableHelper {
     });
     return _matrixArray;
   }
-  
-  List<List<dynamic>> getSeriesArray(Map<String, dynamic> series,{List<String> header = default_value_series,bool ascending = true}) {
+
+  List<List<dynamic>> getSeriesArray(Map<String, dynamic> series,
+      {List<String> header = default_value_series, bool ascending = true}) {
     List<List<dynamic>> seriesArray = [];
     List<List<dynamic>> results = [];
     series.forEach((key, value) {
