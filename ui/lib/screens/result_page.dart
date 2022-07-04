@@ -6,7 +6,7 @@ import 'package:taxonomy_method/model/shortest_distance.dart';
 import 'package:taxonomy_method/provider/pdf_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:taxonomy_method/bloc/results_bloc.dart';
-import 'package:taxonomy_method/model/taxonomy_input.dart';
+import 'package:taxonomy_method/model/rasfi_input.dart';
 import 'package:taxonomy_method/model/model_results.dart';
 import 'package:taxonomy_method/screens/home_page.dart';
 
@@ -37,7 +37,7 @@ class _ResultPageState extends State<ResultPage> {
     return Scaffold(
       appBar: AppBar(
         title: Text('Results'),
-        backgroundColor: Colors.green,
+        backgroundColor: Colors.orange,
       ),
       body: Column(
         children: [

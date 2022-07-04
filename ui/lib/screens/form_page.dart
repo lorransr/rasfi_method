@@ -21,6 +21,16 @@ class _FormPageState extends State<FormPage> {
   var _dropDownValue;
   var _criteriaWeight;
   late int _lastRemovedPos;
+  bool autoValidate = true;
+  bool readOnly = false;
+  bool showSegmentedControl = true;
+  List<GlobalKey> _formKeyList = [];
+  bool _ageHasError = false;
+  bool _genderHasError = false;
+
+  var genderOptions = ['Male', 'Female', 'Other'];
+
+  void _onChanged(dynamic val) => debugPrint(val.toString());
 
   void _snackValidationError(String message) {
     final snack = SnackBar(
@@ -33,7 +43,13 @@ class _FormPageState extends State<FormPage> {
 
   void _addCriteria() {
     setState(() {
-      var newCriteria = Criteria(_textController.text, CriteriaType.benefit);
+      Criteria newCriteria = Criteria(
+          name: _textController.text,
+          type: CriteriaType.benefit,
+          weight: 1.0,
+          antiIdealPoint: 0.0,
+          idealPoint:
+              0.0); //Criteria(_textController.text, CriteriaType.benefit);
       if (["", " ", "  "].contains(newCriteria.name) ||
           newCriteria.name.isEmpty) {
         _snackValidationError("Criteria name must not be empty");
@@ -60,7 +76,7 @@ class _FormPageState extends State<FormPage> {
     if (nErrors == 0) {
       print("Valid Criterias");
       Navigator.pushNamed(context, MatrixPage.routeName,
-          arguments: _criteriaList);
+          arguments: {"criteriaList": _criteriaList});
     } else {
       print("Validation Errors were found: $nErrors");
     }
@@ -91,7 +107,7 @@ class _FormPageState extends State<FormPage> {
             });
           },
         ),
-        duration: Duration(seconds: 5),
+        duration: Duration(seconds: 3),
       );
       ScaffoldMessenger.of(context).showSnackBar(snack);
     });
@@ -102,7 +118,7 @@ class _FormPageState extends State<FormPage> {
     return Scaffold(
         appBar: AppBar(
           title: Text('Criteria Input'),
-          backgroundColor: Colors.green,
+          backgroundColor: Colors.orange,
         ),
         body: Column(
           children: <Widget>[
@@ -141,7 +157,7 @@ class _FormPageState extends State<FormPage> {
                     },
                     child: Text("Submit"),
                     style: ElevatedButton.styleFrom(
-                      primary: Colors.green,
+                      primary: Colors.orange,
                       onPrimary: Colors.white,
                     ),
                   ),
@@ -154,6 +170,7 @@ class _FormPageState extends State<FormPage> {
 
   Widget itemBuilder(BuildContext context, int index) {
     int keyValue = index;
+    final controller = TextEditingController(text: "0.0");
     //Widget responsável por permitir dismiss
     return StatefulBuilder(
       builder:
@@ -198,6 +215,38 @@ class _FormPageState extends State<FormPage> {
                   ).toList(),
                 ),
               ),
+              Form(
+                child: Wrap(
+                  children: [
+                    ListTile(
+                      leading: Text('Weight: '),
+                      title: TextFormField(
+                        controller: controller,
+                        keyboardType: TextInputType.number,
+                        inputFormatters: <TextInputFormatter>[
+                          FilteringTextInputFormatter.allow(
+                              RegExp(r"^\d*\.?\d*"))
+                        ],
+                        onFieldSubmitted: (val) {
+                          print(val);
+                        },
+                        validator: (String? val) {
+                          if (val == null ||
+                              double.tryParse(val) == null ||
+                              double.parse(val) <= 0.0 ||
+                              double.parse(val) >= 100.0) {
+                            return "Insert criteria weight (0.0-100.0)";
+                          }
+                        },
+                        autovalidateMode: AutovalidateMode.onUserInteraction,
+                        onChanged: (value) {
+                          Form.of(primaryFocus!.context!)!.save();
+                        },
+                      ),
+                    ),
+                  ],
+                ),
+              ),
             ],
           ),
         ),
@@ -207,4 +256,126 @@ class _FormPageState extends State<FormPage> {
       ),
     );
   }
+
+  // Widget alternative_form_build(BuildContext context, int index) {
+  //   return SingleChildScrollView(
+  //     child: Column(
+  //       children: <Widget>[
+  //         FormBuilder(
+  //           key: _formKey,
+  //           // enabled: false,
+  //           onChanged: () {
+  //             _formKey.currentState!.save();
+  //             debugPrint(_formKey.currentState!.value.toString());
+  //           },
+  //           autovalidateMode: AutovalidateMode.disabled,
+  //           initialValue: const {
+  //             'movie_rating': 5,
+  //             'best_language': 'Dart',
+  //             'age': '13',
+  //             'gender': 'Male'
+  //           },
+  //           skipDisabled: true,
+  //           child: Column(
+  //             children: <Widget>[
+  //               const SizedBox(height: 15),
+  //               FormBuilderTextField(
+  //                 autovalidateMode: AutovalidateMode.always,
+  //                 name: 'age',
+  //                 decoration: InputDecoration(
+  //                   labelText: 'Age',
+  //                   suffixIcon: _ageHasError
+  //                       ? const Icon(Icons.error, color: Colors.red)
+  //                       : const Icon(Icons.check, color: Colors.green),
+  //                 ),
+  //                 onChanged: (val) {
+  //                   setState(() {
+  //                     _ageHasError =
+  //                         !(_formKey.currentState?.fields['age']?.validate() ??
+  //                             false);
+  //                   });
+  //                 },
+  //                 // valueTransformer: (text) => num.tryParse(text),
+  //                 validator: FormBuilderValidators.compose([
+  //                   FormBuilderValidators.required(),
+  //                   FormBuilderValidators.numeric(),
+  //                   FormBuilderValidators.max(70),
+  //                 ]),
+  //                 // initialValue: '12',
+  //                 keyboardType: TextInputType.number,
+  //                 textInputAction: TextInputAction.next,
+  //               ),
+  //               FormBuilderDropdown<String>(
+  //                 // autovalidate: true,
+  //                 name: 'gender',
+  //                 decoration: InputDecoration(
+  //                   labelText: 'Gender',
+  //                   suffix: _genderHasError
+  //                       ? const Icon(Icons.error)
+  //                       : const Icon(Icons.check),
+  //                 ),
+  //                 // initialValue: 'Male',
+  //                 allowClear: true,
+  //                 hint: const Text('Select Gender'),
+  //                 validator: FormBuilderValidators.compose(
+  //                     [FormBuilderValidators.required()]),
+  //                 items: genderOptions
+  //                     .map((gender) => DropdownMenuItem(
+  //                           alignment: AlignmentDirectional.center,
+  //                           value: gender,
+  //                           child: Text(gender),
+  //                         ))
+  //                     .toList(),
+  //                 onChanged: (val) {
+  //                   setState(() {
+  //                     _genderHasError = !(_formKey
+  //                             .currentState?.fields['gender']
+  //                             ?.validate() ??
+  //                         false);
+  //                   });
+  //                 },
+  //                 valueTransformer: (val) => val?.toString(),
+  //               ),
+  //             ],
+  //           ),
+  //         ),
+  //         Row(
+  //           children: <Widget>[
+  //             Expanded(
+  //               child: ElevatedButton(
+  //                 onPressed: () {
+  //                   if (_formKey.currentState?.saveAndValidate() ?? false) {
+  //                     debugPrint(_formKey.currentState?.value.toString());
+  //                   } else {
+  //                     debugPrint(_formKey.currentState?.value.toString());
+  //                     debugPrint('validation failed');
+  //                   }
+  //                 },
+  //                 child: const Text(
+  //                   'Submit',
+  //                   style: TextStyle(color: Colors.white),
+  //                 ),
+  //               ),
+  //             ),
+  //             const SizedBox(width: 20),
+  //             Expanded(
+  //               child: OutlinedButton(
+  //                 onPressed: () {
+  //                   _formKey.currentState?.reset();
+  //                 },
+  //                 // color: Theme.of(context).colorScheme.secondary,
+  //                 child: Text(
+  //                   'Reset',
+  //                   style: TextStyle(
+  //                       color: Theme.of(context).colorScheme.secondary),
+  //                 ),
+  //               ),
+  //             ),
+  //           ],
+  //         ),
+  //       ],
+  //     ),
+  //   );
+  // }
+
 }

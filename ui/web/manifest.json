@@ -1,6 +1,6 @@
 {
-    "name": "taxonomy_method",
-    "short_name": "taxonomy_method",
+    "name": "rasfi-method",
+    "short_name": "rasfi-methd",
     "start_url": ".",
     "display": "minimal-ui",
     "background_color": "#0175C2",

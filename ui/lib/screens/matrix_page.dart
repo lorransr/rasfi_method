@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:taxonomy_method/model/criteria.dart';
 import 'package:taxonomy_method/model/criteria_type.dart';
-import 'package:taxonomy_method/model/taxonomy_input.dart';
+import 'package:taxonomy_method/model/rasfi_input.dart';
 import 'package:taxonomy_method/screens/result_page.dart';
 
 class MatrixPage extends StatefulWidget {
@@ -147,8 +147,11 @@ class _MatrixPageState extends State<MatrixPage> {
     List<List<double>> alternatives = _getAlternatives();
     List<String> alternativesNames = _getAlternativesNames();
     if (_validAlternatives(alternatives)) {
-      TaxonomyInput input =
-          TaxonomyInput(criterias, alternatives, alternativesNames);
+      RasfiInput input = RasfiInput(
+          criterias: _criterias,
+          alternativesNames: [],
+          transformationInterval: [],
+          vars: alternatives);
       Navigator.pushNamed(context, ResultPage.routeName, arguments: input);
     } else {
       _snackValidationError("You must input at least 2 alternatives");
@@ -183,7 +186,12 @@ class _MatrixPageState extends State<MatrixPage> {
     int i = 0;
     while (i < n) {
       criterias.add(
-        Criteria("criteria_$i", CriteriaType.benefit),
+        Criteria(
+            name: "criteria_$i",
+            type: CriteriaType.benefit,
+            weight: 0.0,
+            antiIdealPoint: 0.0,
+            idealPoint: 0.0),
       );
       i++;
     }
@@ -194,13 +202,14 @@ class _MatrixPageState extends State<MatrixPage> {
   Widget build(BuildContext context) {
     // _criterias = _generateCriterias(20);
     // _cols = _createCols(_criterias);
-    List<Criteria> _criterias = ModalRoute.of(context)?.settings.arguments as List<Criteria>;
+    List<Criteria> _criterias =
+        ModalRoute.of(context)?.settings.arguments as List<Criteria>;
     print("n criterias: ${_criterias.length}");
     _cols = _createCols(_criterias);
     return Scaffold(
       appBar: AppBar(
         leadingWidth: 200,
-        backgroundColor: Colors.green,
+        backgroundColor: Colors.orange,
         leading: TextButton.icon(
           onPressed: () => Navigator.pop(context),
           icon: Icon(

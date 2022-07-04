@@ -6,15 +6,34 @@ class Criteria {
   String name;
   String key = "";
   CriteriaType type = CriteriaType.benefit;
-  Criteria(this.name, this.type) {
+  double weight;
+  double antiIdealPoint;
+  double idealPoint;
+  Criteria(
+      {required this.name,
+      required this.type,
+      required this.weight,
+      required this.antiIdealPoint,
+      required this.idealPoint}) {
     this.key = getRandomString(10);
   }
+  Criteria.empty(
+      {this.name = "",
+      this.antiIdealPoint = 0.0,
+      this.idealPoint = 0.0,
+      this.weight = 0.0,
+      this.type = CriteriaType.benefit});
   Map<String, String> getColumn() {
     return {"title": this.name, "key": this.key};
   }
 
-  Map<String, dynamic> toJson() =>
-      {"name": name, "type": getCriteriaTypeName(type)};
+  Map<String, dynamic> toJson() => {
+        "name": name,
+        "type": getCriteriaTypeName(type),
+        "weight": weight,
+        "min_value": antiIdealPoint,
+        "max_value": idealPoint
+      };
 }
 
 const _chars = 'AaBbCcDdEeFfGgHhIiJjKkLlMmNnOoPpQqRrSsTtUuVvWwXxYyZz1234567890';

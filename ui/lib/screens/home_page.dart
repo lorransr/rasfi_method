@@ -77,13 +77,13 @@ class _HomePageState extends State<HomePage> {
       appBar: PreferredSize(
         preferredSize: Size(screenSize.width, 1000),
         child: Container(
-          color: Colors.green,
+          color: Colors.orange,
           child: Padding(
             padding: EdgeInsets.all(20),
             child: Row(
               children: [
                 Text(
-                  'TAXONOMY METHOD',
+                  'RASFI METHOD',
                   style: TextStyle(color: Colors.white),
                 ),
                 Expanded(
@@ -135,7 +135,7 @@ class _HomePageState extends State<HomePage> {
       persistentFooterButtons: [
         FittedBox(
           fit: BoxFit.scaleDown,
-                  child: Row(
+          child: Row(
             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
             children: [
               Container(
@@ -143,12 +143,12 @@ class _HomePageState extends State<HomePage> {
                 child: Image.asset("assets/logos/ime.png"),
               ),
               Padding(
-                padding: const EdgeInsets.symmetric(horizontal:30),
+                padding: const EdgeInsets.symmetric(horizontal: 30),
                 child: Text(
                   '''
                   "All rights reserved. Non-commercial (academic) use of this software is free.
                   The only thing asked in exchange is to cite this software when the results are used in publications".
-                  To cite the software: RODRIGUES, Lorran Santos; SANTOS, Marcos dos; GOMES, Carlos Francisco Simões;Taxonomy Software Web (v.1). 2021.''',
+                  To cite the software: RODRIGUES, Lorran Santos; SANTOS, Marcos dos; GOMES, Carlos Francisco Simões;Rasfi Software Web (v.1). 2022.''',
                   textAlign: TextAlign.justify,
                   maxLines: 5,
                 ),

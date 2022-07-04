@@ -1,4 +1,4 @@
-import 'taxonomy_output.dart';
+import 'rasfi_output.dart';
 
 class ModelResults {
   final RasfiResults results;

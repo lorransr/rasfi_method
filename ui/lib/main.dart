@@ -1,6 +1,7 @@
 import 'package:taxonomy_method/screens/about_page.dart';
 import 'package:flutter/material.dart';
 import 'package:taxonomy_method/screens/form_page.dart';
+import 'package:taxonomy_method/screens/form_test.dart';
 import 'package:taxonomy_method/screens/home_page.dart';
 import 'package:taxonomy_method/screens/matrix_page.dart';
 import 'package:taxonomy_method/screens/result_page.dart';
@@ -13,7 +14,7 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'Taxonomy Method',
+      title: 'Rasfi Method',
       debugShowCheckedModeBanner: false,
       theme: ThemeData(
         primarySwatch: Colors.blue,
@@ -24,7 +25,7 @@ class MyApp extends StatelessWidget {
       initialRoute: "/",
       routes: {
         "/": (context) => HomePage(),
-        "/form": (context) => FormPage(),
+        "/form": (context) => MyForm(),
         "/matrix": (context) => MatrixPage(),
         "/results": (context) => ResultPage(),
         "/about": (context) => AboutPage(),
