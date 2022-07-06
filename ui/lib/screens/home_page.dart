@@ -15,7 +15,7 @@ class HomePage extends StatefulWidget {
 class _HomePageState extends State<HomePage> {
   List _isHovering = [false, false, false];
   final _formKey = GlobalKey<FormState>();
-  final _acceptedKey = "4M0L4ND0 4 M4L4NDR4";
+  final _acceptedKey = "123"; //"4M0L4ND0 4 M4L4NDR4";
   final _textEditingController = TextEditingController();
 
   Future<void> _showPassWordDialog() async {
@@ -65,7 +65,7 @@ class _HomePageState extends State<HomePage> {
     if (_formKey.currentState!.validate()) {
       // Do something like updating SharedPreferences or User Settings etc.
       Navigator.of(context).pop();
-      Navigator.pushNamed(context, FormPage.routeName);
+      Navigator.pushNamed(context, CriteriaForm.routeName);
     }
   }
 

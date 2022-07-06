@@ -1,7 +1,6 @@
 import 'package:taxonomy_method/screens/about_page.dart';
 import 'package:flutter/material.dart';
 import 'package:taxonomy_method/screens/form_page.dart';
-import 'package:taxonomy_method/screens/form_test.dart';
 import 'package:taxonomy_method/screens/home_page.dart';
 import 'package:taxonomy_method/screens/matrix_page.dart';
 import 'package:taxonomy_method/screens/result_page.dart';
@@ -25,7 +24,7 @@ class MyApp extends StatelessWidget {
       initialRoute: "/",
       routes: {
         "/": (context) => HomePage(),
-        "/form": (context) => MyForm(),
+        "/form": (context) => CriteriaForm(),
         "/matrix": (context) => MatrixPage(),
         "/results": (context) => ResultPage(),
         "/about": (context) => AboutPage(),

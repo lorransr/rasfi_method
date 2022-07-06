@@ -42,8 +42,9 @@ Random _rnd = Random();
 String getRandomString(int length) => String.fromCharCodes(Iterable.generate(
     length, (_) => _chars.codeUnitAt(_rnd.nextInt(_chars.length))));
 
-CriteriaType getCriteriaType(String criteriaTypeName) {
-  if (CriteriaType.benefit.toString().contains(criteriaTypeName)) {
+CriteriaType getCriteriaType(String? criteriaTypeName) {
+  if (criteriaTypeName != null &&
+      CriteriaType.benefit.toString().contains(criteriaTypeName)) {
     return CriteriaType.benefit;
   } else {
     return CriteriaType.cost;
