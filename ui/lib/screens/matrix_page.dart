@@ -43,6 +43,7 @@ class _MatrixPageState extends State<MatrixPage> {
     return DataCell(
         TextFormField(
           controller: controller,
+          showCursor: false,
           keyboardType: TextInputType.number,
           inputFormatters: <TextInputFormatter>[
             FilteringTextInputFormatter.allow(RegExp(r"^\d*\.?\d*"))
@@ -66,6 +67,7 @@ class _MatrixPageState extends State<MatrixPage> {
     return DataCell(
         TextFormField(
           controller: controller,
+          showCursor: false,
           keyboardType: TextInputType.text,
           onFieldSubmitted: (val) {
             print(val);

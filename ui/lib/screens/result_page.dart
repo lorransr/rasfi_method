@@ -98,28 +98,29 @@ class _ResultPageState extends State<ResultPage> {
   Widget _developmentAttributesTile(ModelResults data) {
     print("data: ${data.results.toJson()}");
 
-    return Text("data: ${data.results.toJson()}");
-    // ListTile(
-    //   title: Text(
-    //     "✨ Development Attributes ✨",
-    //     style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
-    //   ),
-    //   subtitle: Padding(
-    //     padding: const EdgeInsets.all(32.0),
-    //     child: Container(
-    //       child: DataTable(
-    //         sortAscending: true,
-    //         sortColumnIndex: 0,
-    //         columns: [
-    //           DataColumn(label: Text("Ranking")),
-    //           DataColumn(label: Text("Alternative")),
-    //           DataColumn(label: Text("Value"))
-    //         ],
-    //         rows: _getRowsFromResults(data.results.developmentAttributes),
-    //       ),
-    //     ),
-    //   ),
-    // );
+    return
+        //  Text("data: ${data.results.toJson()}");
+        ListTile(
+      title: Text(
+        "✨ Alternaives Ranking ✨",
+        style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+      ),
+      subtitle: Padding(
+        padding: const EdgeInsets.all(32.0),
+        child: Container(
+          child: DataTable(
+            sortAscending: true,
+            sortColumnIndex: 0,
+            columns: [
+              DataColumn(label: Text("Ranking")),
+              DataColumn(label: Text("Alternative")),
+              DataColumn(label: Text("Value"))
+            ],
+            rows: _getRowsFromResults(data.results.ranking),
+          ),
+        ),
+      ),
+    );
   }
 
   Widget _simpleMatrixTile(Map<String, dynamic> simpleMatrix) {
@@ -336,10 +337,10 @@ class _ResultPageState extends State<ResultPage> {
           _developmentAttributesTile(data),
           Divider(),
 
-          // Text(
-          //   "Method Outputs",
-          //   style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
-          // ),
+          Text(
+            "Method Outputs",
+            style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+          ),
           // SizedBox(
           //   height: 32,
           // ),

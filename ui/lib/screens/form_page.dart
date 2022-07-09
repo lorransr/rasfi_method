@@ -68,11 +68,10 @@ class _CriteriaFormState extends State<CriteriaForm> {
                   FormState? _currentState = _formKey.currentState;
                   if (_currentState != null && _currentState.validate()) {
                     _currentState.save();
-                    print(_CriteriaFormState.criteriaList.length);
-                    print(
-                        _CriteriaFormState.criteriaList.map((e) => e.toJson()));
-                    Navigator.pushNamed(context, MatrixPage.routeName,
-                        arguments: _CriteriaFormState.criteriaList);
+                    if (_validateCriteria(_CriteriaFormState.criteriaList)) {
+                      Navigator.pushNamed(context, MatrixPage.routeName,
+                          arguments: _CriteriaFormState.criteriaList);
+                    }
                   }
                 },
                 child: Text('Submit'),
@@ -82,6 +81,33 @@ class _CriteriaFormState extends State<CriteriaForm> {
         ),
       ),
     );
+  }
+
+  bool _validateCriteria(List<Criteria> criteriaList) {
+    print(criteriaList.length);
+    print(criteriaList.map((e) => e.toJson()));
+    bool validWeight = _validateWeight(criteriaList);
+    return validWeight;
+  }
+
+  bool _validateWeight(List<Criteria> criteriaList) {
+    bool validWeight = criteriaList
+            .map((e) => e.weight)
+            .reduce((value, element) => value + element) ==
+        1.0;
+    if (validWeight == false) {
+      _snackValidationError("weights should add up to 1");
+    }
+    return validWeight;
+  }
+
+  void _snackValidationError(String message) {
+    final snack = SnackBar(
+      content: Text(message),
+      backgroundColor: Colors.red[200],
+      duration: Duration(seconds: 3),
+    );
+    ScaffoldMessenger.of(context).showSnackBar(snack);
   }
 
   Widget _getCriteria() {
@@ -214,9 +240,8 @@ class _CriteriaTextFieldsState extends State<CriteriaTextFields> {
                 .criteriaList[widget.index].weight = double.parse(v),
             decoration: InputDecoration(hintText: 'Enter it\'s weight'),
             validator: (v) {
-              if (v != null &&
-                  (double.parse(v) < 0.0 || double.parse(v) > 100.0))
-                return 'Valid range between 0.0 - 100.0';
+              if (v != null && (double.parse(v) < 0.0 || double.parse(v) > 1.0))
+                return 'Valid range between 0.0 - 1.0';
               return null;
             },
           ),
@@ -230,9 +255,8 @@ class _CriteriaTextFieldsState extends State<CriteriaTextFields> {
                 .criteriaList[widget.index].idealPoint = double.parse(v),
             decoration: InputDecoration(hintText: 'Enter it\'s Ideal Point'),
             validator: (v) {
-              if (v != null &&
-                  (double.parse(v) < 0.0 || double.parse(v) > 100.0))
-                return 'Valid range between 0.0 - 100.0';
+              if (v != null && (double.parse(v) < 0.0))
+                return 'Value should be positive';
               return null;
             },
           ),
@@ -250,8 +274,8 @@ class _CriteriaTextFieldsState extends State<CriteriaTextFields> {
               if (v != null) {
                 Criteria _currentCriteria =
                     _CriteriaFormState.criteriaList[widget.index];
-                if (double.parse(v) < 0.0 || double.parse(v) > 100.0)
-                  return 'Valid range between 0.0 - 100.0';
+                if (double.parse(v) < 0.0)
+                  return 'Value should be positive';
                 else {
                   return null;
                 }
