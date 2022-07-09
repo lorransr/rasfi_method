@@ -149,8 +149,8 @@ class _MatrixPageState extends State<MatrixPage> {
     if (_validAlternatives(alternatives)) {
       RasfiInput input = RasfiInput(
           criterias: _criterias,
-          alternativesNames: [],
-          transformationInterval: [],
+          alternativesNames: alternativesNames,
+          transformationInterval: [1, 6],
           vars: alternatives);
       Navigator.pushNamed(context, ResultPage.routeName, arguments: input);
     } else {
