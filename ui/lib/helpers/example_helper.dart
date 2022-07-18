@@ -14,25 +14,25 @@ class ExampleHelper {
       Criteria(
           name: "c2",
           type: CriteriaType.benefit,
-          weight: 0.35,
+          weight: 0.25,
           antiIdealPoint: 6,
           idealPoint: 12),
       Criteria(
           name: "c3",
           type: CriteriaType.cost,
-          weight: 0.35,
+          weight: 0.15,
           antiIdealPoint: 20,
           idealPoint: 10),
       Criteria(
           name: "c4",
           type: CriteriaType.cost,
-          weight: 0.35,
+          weight: 0.15,
           antiIdealPoint: 200,
           idealPoint: 100),
       Criteria(
           name: "c5",
           type: CriteriaType.benefit,
-          weight: 0.35,
+          weight: 0.1,
           antiIdealPoint: 2,
           idealPoint: 8),
     ];

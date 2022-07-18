@@ -279,8 +279,8 @@ class _ResultPageState extends State<ResultPage> {
   DataTable _acceptedRangeTile(List<double> acceptedRange) {
     return DataTable(
       columns: [
-        DataColumn(label: Text("Lower Bound")),
-        DataColumn(label: Text("Upper Bound"))
+        DataColumn(label: Text("Arithmetic Mean")),
+        DataColumn(label: Text("Harmonic Mean"))
       ],
       rows: [
         DataRow(cells: [
@@ -336,113 +336,63 @@ class _ResultPageState extends State<ResultPage> {
         children: [
           _developmentAttributesTile(data),
           Divider(),
-
           Text(
             "Method Outputs",
             style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
           ),
-          // SizedBox(
-          //   height: 32,
-          // ),
-          // ListTile(
-          //   title: Text(
-          //     "Raw Matrix",
-          //     style: TextStyle(fontWeight: FontWeight.bold),
-          //   ),
-          //   subtitle: Padding(
-          //     padding: const EdgeInsets.all(32.0),
-          //     child: Container(
-          //       child: _matrixTile(data.results.rawMatrix,
-          //           alternatives: _alternatives),
-          //     ),
-          //   ),
-          // ),
-          // ListTile(
-          //   title: Text(
-          //     "Normalized Matrix",
-          //     style: TextStyle(fontWeight: FontWeight.bold),
-          //   ),
-          //   subtitle: Padding(
-          //     padding: const EdgeInsets.all(32.0),
-          //     child: Container(
-          //         child: _matrixTile(data.results.normalizedMatrix,
-          //             alternatives: _alternatives)),
-          //   ),
-          // ),
-          // ListTile(
-          //   title: Text(
-          //     "Shortest Distance",
-          //     style: TextStyle(fontWeight: FontWeight.bold),
-          //   ),
-          //   subtitle: Padding(
-          //     padding: const EdgeInsets.all(32.0),
-          //     child: Container(
-          //         child: _distanceTile(data.results.shortestDistance.values,
-          //             _alternatives, 'Shortest Distance')),
-          //   ),
-          // ),
-          // ListTile(
-          //   title: Text(
-          //     "Shortest Distance",
-          //     style: TextStyle(fontWeight: FontWeight.bold),
-          //   ),
-          //   subtitle: Padding(
-          //     padding: const EdgeInsets.all(32.0),
-          //     child: Container(
-          //       child: _avgDistanceTile(data.results.shortestDistance),
-          //     ),
-          //   ),
-          // ),
-          // ListTile(
-          //   title: Text(
-          //     "Accepted Range",
-          //     style: TextStyle(fontWeight: FontWeight.bold),
-          //   ),
-          //   subtitle: Padding(
-          //     padding: const EdgeInsets.all(32.0),
-          //     child: Container(
-          //       child: _acceptedRangeTile(data.results.acceptedRange),
-          //     ),
-          //   ),
-          // ),
-          // ListTile(
-          //   title: Text(
-          //     "Normalized Matrix Filtered",
-          //     style: TextStyle(fontWeight: FontWeight.bold),
-          //   ),
-          //   subtitle: Padding(
-          //     padding: const EdgeInsets.all(32.0),
-          //     child: Container(
-          //         child: _matrixTile(data.results.normalizedMatrixFiltered,
-          //             alternatives: _alternatives)),
-          //   ),
-          // ),
-          // ListTile(
-          //   title: Text(
-          //     "Ideal Values",
-          //     style: TextStyle(fontWeight: FontWeight.bold),
-          //   ),
-          //   subtitle: Padding(
-          //     padding: const EdgeInsets.all(32.0),
-          //     child: Container(
-          //       child: _seriesTile(data.results.idealValues, "Criterias"),
-          //     ),
-          //   ),
-          // ),
-          // ListTile(
-          //   title: Text(
-          //     "Development Pattern",
-          //     style: TextStyle(fontWeight: FontWeight.bold),
-          //   ),
-          //   subtitle: Padding(
-          //     padding: const EdgeInsets.all(32.0),
-          //     child: Container(
-          //       child: _seriesTile(
-          //           data.results.developmentPattern, "Alternatives"),
-          //     ),
-          //   ),
-          // ),
-
+          SizedBox(
+            height: 32,
+          ),
+          ListTile(
+            title: Text(
+              "Raw Matrix",
+              style: TextStyle(fontWeight: FontWeight.bold),
+            ),
+            subtitle: Padding(
+              padding: const EdgeInsets.all(32.0),
+              child: Container(
+                child: _matrixTile(data.results.decisionMatrix,
+                    alternatives: _alternatives),
+              ),
+            ),
+          ),
+          ListTile(
+            title: Text(
+              "Transformed Matrix",
+              style: TextStyle(fontWeight: FontWeight.bold),
+            ),
+            subtitle: Padding(
+              padding: const EdgeInsets.all(32.0),
+              child: Container(
+                  child: _matrixTile(data.results.transformedDecisionMatrix,
+                      alternatives: _alternatives)),
+            ),
+          ),
+          ListTile(
+            title: Text(
+              "Normalized Matrix",
+              style: TextStyle(fontWeight: FontWeight.bold),
+            ),
+            subtitle: Padding(
+              padding: const EdgeInsets.all(32.0),
+              child: Container(
+                  child: _matrixTile(data.results.normalizedDecisionMatrix,
+                      alternatives: _alternatives)),
+            ),
+          ),
+          ListTile(
+            title: Text(
+              "Average estimates",
+              style: TextStyle(fontWeight: FontWeight.bold),
+            ),
+            subtitle: Padding(
+              padding: const EdgeInsets.all(32.0),
+              child: Container(
+                child: _acceptedRangeTile(
+                    [data.results.arithmeticMean, data.results.harmonicMean]),
+              ),
+            ),
+          ),
           Row(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [

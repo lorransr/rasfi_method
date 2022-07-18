@@ -3,7 +3,9 @@ import 'package:taxonomy_method/model/model_results.dart';
 class TableHelper {
   static const default_value_series = ["key", "value"];
   List<String> getAlternatives(ModelResults data) {
-    return [""];
+    String _criteria = data.results.decisionMatrix.keys.first;
+    return data.results.decisionMatrix[_criteria].keys.toList();
+
     // data.results.developmentAttributes.keys.toList();
   }
 
