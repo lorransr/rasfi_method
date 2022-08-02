@@ -150,7 +150,7 @@ class _MatrixPageState extends State<MatrixPage> {
     List<String> alternativesNames = _getAlternativesNames();
     if (_validAlternatives(alternatives)) {
       RasfiInput input = RasfiInput(
-          criterias: _criterias,
+          criterias: criterias,
           alternativesNames: alternativesNames,
           transformationInterval: [1, 6],
           vars: alternatives);

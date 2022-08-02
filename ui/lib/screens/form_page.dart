@@ -4,6 +4,8 @@ import 'package:taxonomy_method/model/criteria.dart';
 import 'package:taxonomy_method/model/criteria_type.dart';
 import 'package:taxonomy_method/screens/matrix_page.dart';
 
+import '../helpers/example_helper.dart';
+
 class CriteriaForm extends StatefulWidget {
   static const routeName = '/form';
   @override
@@ -16,6 +18,7 @@ class _CriteriaFormState extends State<CriteriaForm> {
   late TextEditingController _weightController;
   late TextEditingController _idealPointController;
   late TextEditingController _antiIdealPointController;
+  final _input = ExampleHelper().rasfiExample();
   static List<Criteria> criteriaList = [Criteria.empty()];
 
   @override
@@ -38,6 +41,7 @@ class _CriteriaFormState extends State<CriteriaForm> {
 
   @override
   Widget build(BuildContext context) {
+    criteriaList = _input.criterias;
     return Scaffold(
       backgroundColor: Colors.grey[200],
       appBar: AppBar(
@@ -89,6 +93,21 @@ class _CriteriaFormState extends State<CriteriaForm> {
     bool validWeight = _validateWeight(criteriaList);
     return validWeight;
   }
+
+  // bool _validateCriteriaPoints(List<Criteria> criteriaList) {
+  //   criteriaList.forEach((criteria) {
+  //     bool _isValid;
+  //     if (criteria.type == CriteriaType.benefit) {
+  //       _isValid = criteria.idealPoint > criteria.antiIdealPoint;
+  //       if (_isValid == false) {
+  //         _snackValidationError(
+  //             "criteria ${criteria.name} ideal point should be higher than anti-ideal");
+  //       }
+  //     } else {
+
+  //     }
+  //   });
+  // }
 
   bool _validateWeight(List<Criteria> criteriaList) {
     bool validWeight = criteriaList

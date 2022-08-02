@@ -133,27 +133,29 @@ class _HomePageState extends State<HomePage> {
         ),
       ),
       persistentFooterButtons: [
-        FittedBox(
-          fit: BoxFit.scaleDown,
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-            children: [
-              Container(
-                height: 64,
-                child: Image.asset("assets/logos/ime.png"),
-              ),
-              Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 30),
-                child: Text(
-                  '''
-                  "All rights reserved. Non-commercial (academic) use of this software is free.
-                  The only thing asked in exchange is to cite this software when the results are used in publications".
-                  To cite the software: RODRIGUES, Lorran Santos; SANTOS, Marcos dos; GOMES, Carlos Francisco Simões;Rasfi Software Web (v.1). 2022.''',
-                  textAlign: TextAlign.justify,
-                  maxLines: 5,
+        Center(
+          child: FittedBox(
+            fit: BoxFit.scaleDown,
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+              children: [
+                Container(
+                  height: 64,
+                  child: Image.asset("assets/logos/ime.png"),
                 ),
-              )
-            ],
+                Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 30),
+                  child: Text(
+                    '''
+                    "All rights reserved. Non-commercial (academic) use of this software is free.
+                    The only thing asked in exchange is to cite this software when the results are used in publications".
+                    To cite the software: RODRIGUES, Lorran Santos; SANTOS, Marcos dos; GOMES, Carlos Francisco Simões;Rasfi Software Web (v.1). 2022.''',
+                    textAlign: TextAlign.justify,
+                    maxLines: 5,
+                  ),
+                )
+              ],
+            ),
           ),
         ),
       ],
