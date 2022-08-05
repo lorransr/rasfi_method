@@ -102,7 +102,7 @@ class _ResultPageState extends State<ResultPage> {
         //  Text("data: ${data.results.toJson()}");
         ListTile(
       title: Text(
-        "✨ Alternaives Ranking ✨",
+        "✨ Alternatives Ranking ✨",
         style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
       ),
       subtitle: Padding(
