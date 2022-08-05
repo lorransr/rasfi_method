@@ -27,7 +27,7 @@ class PDFProvider {
     pdf.addPage(
       pw.MultiPage(
         pageFormat: PdfPageFormat.a4,
-        build: (pw.Context context) {
+        build: (pw.Context context) { 
           return [
             pw.Header(text: "RASFI Method Result Sheet"),
             pw.Text('Development Attributes'),

@@ -1,8 +1,9 @@
 import 'dart:async';
+import 'dart:convert';
 
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:taxonomy_method/screens/form_page.dart';
+import 'package:crypto/crypto.dart';
 
 import 'about_page.dart';
 
@@ -15,7 +16,7 @@ class HomePage extends StatefulWidget {
 class _HomePageState extends State<HomePage> {
   List _isHovering = [false, false, false];
   final _formKey = GlobalKey<FormState>();
-  final _acceptedKey = "123"; //"4M0L4ND0 4 M4L4NDR4";
+  final _acceptedKey = "a65798099a421110ec412a202a23efb3";
   final _textEditingController = TextEditingController();
 
   Future<void> _showPassWordDialog() async {
@@ -39,7 +40,9 @@ class _HomePageState extends State<HomePage> {
                             if (value!.isEmpty) {
                               return "Please Enter a Password";
                             }
-                            if (value != _acceptedKey) {
+                            var hashedValue =
+                                md5.convert(utf8.encode(value)).toString();
+                            if (hashedValue != _acceptedKey) {
                               return 'Wrong Password';
                             } else {
                               return null;
