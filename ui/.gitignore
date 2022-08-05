@@ -39,3 +39,4 @@
 # my docker build script
 docker*.sh
 commands.txt
+*.zip
